@@ -1,0 +1,19 @@
+{% include 'base.html'%}
+
+<!-- <div class="container mx-auto h-screen flex flex-col justify-center items-center">
+    <h1 class="text-3xl font-bold mb-8">Welcome to Your Task Manager App</h1>
+    <div class="flex space-x-4">
+        <a href="/login" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">Login</a>
+        <a href="/signup" class="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded">Signup</a>
+    </div>
+</div> -->
+
+<div class="bg-gray-100 flex justify-center items-center h-screen">
+    <div class="bg-white p-80 rounded-lg shadow-md">
+        <h1 class="text-3xl font-bold mb-8 text-center">Welcome to 'Your Task Manager App'</h1>
+        <div class="flex justify-center space-x-4">
+            <a href="{% url 'login' %}" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">Login</a>
+            <a href="{% url 'register' %}" class="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded">Signup</a>
+        </div>
+    </div>
+</div>

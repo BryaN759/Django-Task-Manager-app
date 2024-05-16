@@ -1,0 +1,85 @@
+{% include 'base.html'%}
+
+
+<form action="{#}" method="GET" class="w-1/2 mx-auto mb-4">
+    <input type="text" name="search_query" placeholder="Search by title"
+        class="w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 mb-2 px-4 py-2">
+    <select name="filter" class="w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 mb-2 px-4 py-2">
+        <option value="">Filter by...</option>
+        <option value="creation_date">Creation Date</option>
+        <option value="due_date">Due Date</option>
+        <option value="priority">Priority</option>
+        <option value="completion_status">Completion Status</option>
+    </select>
+    <button type="submit"
+        class="mt-2 px-4 py-2 bg-indigo-500 text-white rounded-md hover:bg-indigo-600 focus:outline-none focus:bg-indigo-600">Search</button>
+</form>
+
+<div class="p-6">
+    <div class="mb-4">
+        <a href="{% url 'create' %}" class="bg-green-500 hover:bg-green-600 text-white font-bold py-2 px-4 rounded">
+            Add Task
+        </a>
+    </div>
+    <h2 class="text-xl font-bold mb-2">To Do</h2>
+    {% for task in tasks %}
+    {% if not task.complete %}
+    <div class="bg-white rounded-md shadow-sm px-4 py-2 mb-4 flex items-center">
+        <div class="flex-grow">
+            <p class="font-bold">{{ task.title }}</p>
+            <p>Note:    {{ task.description }}</p>
+            <!-- <p>Due:     {{ task.due_date }}</p> -->
+            <p>Priority:{{ task.priority }}</p>
+        </div>
+        <div>
+            <a href="{% url 'edit' task.id %}"
+                class="text-blue-500 hover:text-blue-700 mr-2">Edit</a>
+            <a href="{% url 'delete' task.id %}"
+                class="text-red-500 hover:text-red-700 focus:outline-none">Delete</a>
+        </div>
+        <!-- <div>
+            <a href="{% url 'edit' task.id %}">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-blue-500 hover:text-blue-700 mr-2 cursor-pointer" viewBox="0 0 20 20" fill="currentColor">
+                    <path d="M14.121 3.121L3.757 13.485l-2.829 8.472a.707.707 0 0 0 .854.854l8.471-2.828L16.879 5.879a1 1 0 0 0 0-1.414 1 1 0 0 0-1.414 0z" />
+                    <path fill-rule="evenodd" d="M15.293 3.293a1 1 0 0 1 1.414 0l.993.993a1 1 0 0 1 0 1.414L13.171 16H12v-1.171l9.293-9.293a1 1 0 0 1 1.414 0l.993.993zM5 15a1 1 0 0 1-.293-.707L4 13.586l1.586-1.586 1.414 1.414L5.414 15a.997.997 0 0 1-.707.293z" />
+                </svg>
+            </a>
+            <a href="{% url 'delete' task.id %}">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-red-500 hover:text-red-700 cursor-pointer" viewBox="0 0 20 20" fill="currentColor">
+                    <path fill-rule="evenodd" d="M5 4a2 2 0 0 1 2-2h6a2 2 0 0 1 2 2h3a1 1 0 0 1 0 2h-.257l-.66 11.221A2 2 0 0 1 14.104 19H5.896a2 2 0 0 1-1.979-1.779L3.257 8H3a1 1 0 0 1 0-2h2zm2-2a1 1 0 0 0-1 1h8a1 1 0 0 0-1-1H7zm1 7a1 1 0 0 1 1-1h1a1 1 0 0 1 0 2H9a1 1 0 0 1-1-1zm4 0a1 1 0 0 1 1-1h1a1 1 0 0 1 0 2h-1a1 1 0 0 1-1-1z"/>
+                </svg>
+            </a>
+        </div> -->
+    </div>
+    {% endif %}
+    {% endfor %}
+</div>
+<div class="p-6">
+    <h2 class="text-xl font-bold mb-2">Completed</h2>
+    {% for task in tasks %}
+    {% if task.complete %}
+    <div class="bg-white rounded-md shadow-sm px-4 py-2 mb-4 flex items-center">
+        <div class="flex-grow">
+            <p class="font-bold">{{ task.title }}</p>
+            <p>{{ task.description }}</p>
+        </div>
+        <div>
+            <!-- Edit Icon -->
+            <a href="{% url 'edit' task.id %}">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-blue-500 hover:text-blue-700 mr-2 cursor-pointer" viewBox="0 0 20 20" fill="currentColor">
+                    <path d="M14.121 3.121L3.757 13.485l-2.829 8.472a.707.707 0 0 0 .854.854l8.471-2.828L16.879 5.879a1 1 0 0 0 0-1.414 1 1 0 0 0-1.414 0z" />
+                    <path fill-rule="evenodd" d="M15.293 3.293a1 1 0 0 1 1.414 0l.993.993a1 1 0 0 1 0 1.414L13.171 16H12v-1.171l9.293-9.293a1 1 0 0 1 1.414 0l.993.993zM5 15a1 1 0 0 1-.293-.707L4 13.586l1.586-1.586 1.414 1.414L5.414 15a.997.997 0 0 1-.707.293z" />
+                </svg>
+            </a>
+            
+            <!-- Delete Icon -->
+            <a href="{% url 'delete' task.id %}">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-red-500 hover:text-red-700 cursor-pointer" viewBox="0 0 20 20" fill="currentColor">
+                    <path fill-rule="evenodd" d="M5 4a2 2 0 0 1 2-2h6a2 2 0 0 1 2 2h3a1 1 0 0 1 0 2h-.257l-.66 11.221A2 2 0 0 1 14.104 19H5.896a2 2 0 0 1-1.979-1.779L3.257 8H3a1 1 0 0 1 0-2h2zm2-2a1 1 0 0 0-1 1h8a1 1 0 0 0-1-1H7zm1 7a1 1 0 0 1 1-1h1a1 1 0 0 1 0 2H9a1 1 0 0 1-1-1zm4 0a1 1 0 0 1 1-1h1a1 1 0 0 1 0 2h-1a1 1 0 0 1-1-1z"/>
+                </svg>
+            </a>
+        </div>
+    </div>
+    {% endif %}
+    {% endfor %}
+</div>
