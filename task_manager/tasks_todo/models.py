@@ -16,11 +16,11 @@ class Task(models.Model):
 
     data_posted = models.DateTimeField(auto_now_add=True)
 
-    # due_date    = models.DateField()
+    due_date    = models.DateField()
 
-    # image       = models.ImageField()
+    images      = models.ImageField(upload_to='task_images/', null=True, blank=True)
 
-    priority    =  priority = models.CharField(max_length=10, choices=PRIORITY_CHOICES, default='LOW')
+    priority    =  models.CharField(max_length=10, choices=PRIORITY_CHOICES, default='LOW')
 
     complete    = models.BooleanField(default=False, blank=True)
 

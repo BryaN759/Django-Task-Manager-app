@@ -4,11 +4,6 @@ from .models import Task
 from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
 from django.contrib.auth.models import User 
 
-class TaskForm(forms.ModelForm):
-    class Meta:
-        model = Task
-        fields = '__all__'
-
 
 
 class CreateUserForm(UserCreationForm):
@@ -47,7 +42,7 @@ class LoginForm(AuthenticationForm):
 class CreateTaskForm(forms.ModelForm):
     class Meta:
         model = Task
-        fields = ['title', 'description', 'priority',]
+        fields = ['title', 'description', 'due_date', 'priority', 'images',]
         exclude = ['user',]
 
 
@@ -65,15 +60,22 @@ class CreateTaskForm(forms.ModelForm):
         'placeholder': 'Add a description',
         'class': 'w-full py-2 px-4 rounded-lg border border-gray-400 mb-4'
     }))
+    due_date = forms.DateField(widget=forms.DateInput(attrs={
+        'type': 'date',
+        'class': 'w-full py-2 px-4 rounded-lg border border-gray-400 mb-4'
+    }))
     priority = forms.ChoiceField(choices=PRIORITY_CHOICES, widget=forms.Select(attrs={
         'placeholder': 'Set priority',
+        'class': 'w-full py-2 px-4 rounded-lg border border-gray-400 mb-4'
+    }))
+    images = forms.ImageField(required=False, widget=forms.FileInput(attrs={
         'class': 'w-full py-2 px-4 rounded-lg border border-gray-400 mb-4'
     }))
 
 class EditTaskForm(forms.ModelForm):
     class Meta:
         model = Task
-        fields = ['title', 'description', 'priority','complete']
+        fields = ['title', 'description', 'due_date', 'priority','complete']
         exclude = ['user',]
 
 
@@ -91,12 +93,33 @@ class EditTaskForm(forms.ModelForm):
         'placeholder': 'Add a description',
         'class': 'w-full py-2 px-4 rounded-lg border border-gray-400 mb-4'
     }))
+    due_date = forms.DateField(widget=forms.DateInput(attrs={
+        'type': 'date',
+        'class': 'w-full py-2 px-4 rounded-lg border border-gray-400 mb-4'
+    }))
     priority = forms.ChoiceField(choices=PRIORITY_CHOICES, widget=forms.Select(attrs={
         'placeholder': 'Set priority',
+        'class': 'w-full py-2 px-4 rounded-lg border border-gray-400 mb-4'
+    }))
+    images = forms.ImageField(required=False, widget=forms.FileInput(attrs={
         'class': 'w-full py-2 px-4 rounded-lg border border-gray-400 mb-4'
     }))
     complete = forms.BooleanField(required=False, widget=forms.CheckboxInput(attrs={
         'class': 'mb-4'
     }))
 
-    
+class ProfileForm(forms.ModelForm):
+    password = None
+    class Meta:
+        model = User
+        fields = ['username', 'email',]
+        exclude = ['password1', 'password2',]
+
+    username = forms.CharField(widget=forms.TextInput(attrs={
+    'placeholder': 'Your username',
+    'class': 'w-full py-2 px-4 rounded-lg border border-gray-400 mb-4'
+    }))
+    email = forms.CharField(widget=forms.EmailInput(attrs={
+    'placeholder': 'Your email address',
+    'class': 'w-full py-2 px-4 rounded-lg border border-gray-400 mb-4'
+    }))
